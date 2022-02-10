@@ -6,37 +6,20 @@ import com.iskra.blogsystemvtu.util.dto.CreateUserDTO;
 import javassist.NotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
     private final AuthorityService authorityService;
-
-    public UserDetails loadUserByUsername(String email) {
-        return userRepository.findByEmail(email)
-                .map(user -> {
-                    Set<GrantedAuthority> grantedAuthorities = user.getAuthorities()
-                            .stream()
-                            .map(role -> new SimpleGrantedAuthority(role.getName()))
-                            .collect(Collectors.toSet());
-                    return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), grantedAuthorities);
-                })
-                .orElseThrow(() -> new UsernameNotFoundException("Invalid user!"));
-    }
 
     public String createUser(CreateUserDTO createUserDTO) {
         if (!createUserDTO.getPassword().equals(createUserDTO.getConfirmPassword())) {
