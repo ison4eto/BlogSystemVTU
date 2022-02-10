@@ -29,6 +29,7 @@ public class UserController {
 
     private final UserService userService;
 
+    @PreAuthorize("!isAuthenticated()")
     @GetMapping("/register")
     public String register(Model model) {
         model.addAttribute(VIEW, Views.REGISTER);
@@ -36,11 +37,13 @@ public class UserController {
         return "base-layout";
     }
 
+    @PreAuthorize("!isAuthenticated()")
     @PostMapping("/register")
     public String registerProcess(CreateUserDTO createUserDTO) {
         return userService.createUser(createUserDTO);
     }
 
+    @PreAuthorize("!isAuthenticated()")
     @GetMapping("/login")
     public String login(Model model) {
         model.addAttribute(VIEW, Views.LOGIN);

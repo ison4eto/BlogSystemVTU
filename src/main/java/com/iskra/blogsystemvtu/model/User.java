@@ -30,6 +30,9 @@ public class User extends BaseEntity {
             inverseJoinColumns = @JoinColumn(name = "authority_id"))
     private Set<Authority> authorities = new HashSet<>();
 
+    @OneToMany(mappedBy = "author")
+    private Set<Article> articles = new HashSet<>();
+
     public User(String email, String firstName, String lastName, String password) {
         this.email = email;
         this.firstName = firstName;
@@ -41,6 +44,7 @@ public class User extends BaseEntity {
         this.authorities.add(authority);
     }
 
+    @Transient
     public String getFullName() {
         return String.format("%s %s", firstName, lastName);
     }

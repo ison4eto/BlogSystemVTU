@@ -7,4 +7,6 @@ import lombok.NoArgsConstructor;
 public class AttributeKeys {
     public static final String VIEW = "view";
     public static final String USER = "user";
+    public static final String ARTICLES = "articles";
+    public static final String ARTICLE = "article";
 }
