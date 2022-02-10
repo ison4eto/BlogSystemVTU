@@ -23,10 +23,6 @@ public class ArticleService {
         return "redirect:/";
     }
 
-    public List<Article> getAllArticles() {
-        return articleRepository.findAll();
-    }
-
     public Article getArticleById(String id) {
         return articleRepository.findOne(id);
     }
@@ -49,5 +45,16 @@ public class ArticleService {
         }
         articleRepository.delete(article);
         return "redirect:/";
+    }
+
+    public List<Article> getArticlesByKeyword(String keyword) {
+        if (keyword == null || keyword.trim().isEmpty()) {
+            return getAllArticles();
+        }
+        return articleRepository.findAllByContentContainsOrTitleContains(keyword, keyword);
+    }
+
+    private List<Article> getAllArticles() {
+        return articleRepository.findAll();
     }
 }

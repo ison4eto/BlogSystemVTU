@@ -15,9 +15,9 @@ public class HomeController {
     private final ArticleService articleService;
 
     @GetMapping("/")
-    public String index(Model model) {
+    public String index(Model model, String keyword) {
         model.addAttribute(AttributeKeys.VIEW, Views.HOME);
-        model.addAttribute(AttributeKeys.ARTICLES, articleService.getAllArticles());
+        model.addAttribute(AttributeKeys.ARTICLES, articleService.getArticlesByKeyword(keyword));
         return "base-layout";
     }
 }

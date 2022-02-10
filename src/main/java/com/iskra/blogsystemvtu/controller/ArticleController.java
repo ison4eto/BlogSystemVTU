@@ -39,8 +39,8 @@ public class ArticleController {
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping("")
-    public String getAllArticles(Model model) {
-        List<Article> articles = articleService.getAllArticles();
+    public String getAllArticles(Model model, String keyword) {
+        List<Article> articles = articleService.getArticlesByKeyword(keyword);
 
         model.addAttribute(AttributeKeys.ARTICLES, articles);
         model.addAttribute(AttributeKeys.VIEW, Views.HOME);

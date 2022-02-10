@@ -3,6 +3,15 @@
 </main>
 <main sec:authorize="isAuthenticated()">
     <div class="container body-content">
+        <form class="form-inline" th:action="@{/articles}" method="get">
+            <div class="form-group">
+                <div class="col-sm-4 ">
+                    <input class="form-control" type="text" id="keyword" name="keyword" placeholder="Filter articles"
+                           autocomplete="off"/>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-info">Filter</button>
+        </form>
         <div class="row">
             <th:block th:each="article : ${articles}">
                 <div class="col-md-6">
